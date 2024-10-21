@@ -29,6 +29,28 @@ export const PeopleProvider = ({ children }) => {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
   };
 
+  // const addIdea = async (personId, text, img, width, height) => {
+  //   const newIdea = {
+  //     id: randomUUID(),
+  //     text,
+  //     img,
+  //     width,
+  //     height,
+  //   };
+  //   console.log(newIdea);
+  //   const updatedPeople = people.map((person) => {
+  //     if (person.id === personId) {
+  //       return {
+  //         ...person,
+  //         ideas: [...person.ideas, newIdea],
+  //       };
+  //     }
+  //     return person;
+  //   });
+  //   console.log(updatedPeople);
+  //   setPeople(updatedPeople);
+  //   await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(updatedPeople));
+  // };
   const addIdea = async (personId, text, img, width, height) => {
     const newIdea = {
       id: randomUUID(),
@@ -37,6 +59,7 @@ export const PeopleProvider = ({ children }) => {
       width,
       height,
     };
+
     const updatedPeople = people.map((person) => {
       if (person.id === personId) {
         return {
@@ -56,7 +79,7 @@ export const PeopleProvider = ({ children }) => {
       if (person.id === personId) {
         return {
           ...person,
-          idea: person.idea.filter((idea) => idea.id !== ideaId),
+          ideas: person.ideas.filter((idea) => idea.id !== ideaId),
         };
       }
       return person;

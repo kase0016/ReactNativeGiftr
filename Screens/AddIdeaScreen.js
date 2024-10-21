@@ -19,7 +19,7 @@ export default function AddIdeaScreen({ navigation, route }) {
   const [cameraRef, setCameraRef] = useState();
   const [photo, setPhoto] = useState();
   const { addIdea } = useContext(PeopleContext);
-  const { person } = route.params;
+  const { personId } = route.params;
 
   if (!permission) {
     return <View />;
@@ -51,14 +51,14 @@ export default function AddIdeaScreen({ navigation, route }) {
   };
 
   const saveIdea = () => {
-    const img = { uri: photo, width: 200, height: 300 };
-    addIdea(person.id, text, img.uri, img.width, img.height);
-    navigation.navigate("IdeaScreen", { personId: person.id });
+    const img = { uri: photo, width: 40, height: 60 };
+    addIdea(personId, text, img.uri, img.width, img.height);
+    navigation.navigate("IdeaScreen", { personId });
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.mainHeader}>Add an Idea for{person.name} </Text>
+      <Text style={styles.mainHeader}>Add an Idea for </Text>
       <View>
         <Text style={styles.ideaNameLabel}>Gift Idea</Text>
         <TextInput

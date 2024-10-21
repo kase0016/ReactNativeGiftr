@@ -15,11 +15,11 @@ export default function IdeaScreen({ navigation, route }) {
   const { people, deleteIdea } = useContext(PeopleContext);
   const { personId } = route.params;
 
-  const DeleteAction = (id) => {
+  const DeleteAction = (personIdi, ideaId) => {
     return (
       <TouchableOpacity
         style={styles.deleteButton}
-        onPress={() => deleteIdea(id)}
+        onPress={() => deleteIdea(personIdi, ideaId)}
       >
         <Text style={styles.deleteBtnText}>Delete</Text>
       </TouchableOpacity>
@@ -27,28 +27,29 @@ export default function IdeaScreen({ navigation, route }) {
   };
 
   const ideaBlock = ({ item }) => {
-    if (item.id === personId) {
-      return (
-        <View>
-          {item.ideas.map((idea) => (
-            <Swipeable
-              key={idea.id}
-              renderRightActions={() => DeleteAction(idea.id)}
-            >
-              <TouchableOpacity>
-                <View style={styles.ideaBlock}>
-                  <Text style={styles.ideaName}>{idea.text}</Text>
-                  <Image
-                    source={{ uri: idea.img }}
-                    style={{ width: idea.width, height: idea.height }}
-                  />
-                </View>
-              </TouchableOpacity>
-            </Swipeable>
-          ))}
-        </View>
-      );
+    if (item.id !== personId) {
+      return null;
     }
+    return (
+      <View>
+        {item.ideas.map((idea) => (
+          <Swipeable
+            key={idea.id}
+            renderRightActions={() => DeleteAction(personId, idea.id)}
+          >
+            <TouchableOpacity style={styles.ideaContainer}>
+              <View style={styles.ideaBlock}>
+                <Text style={styles.ideaName}>{idea.text}</Text>
+                <Image
+                  source={{ uri: idea.img }}
+                  style={{ width: idea.width, height: idea.height }}
+                />
+              </View>
+            </TouchableOpacity>
+          </Swipeable>
+        ))}
+      </View>
+    );
   };
 
   useLayoutEffect(() => {
@@ -57,9 +58,7 @@ export default function IdeaScreen({ navigation, route }) {
       headerRight: () => (
         <View style={{ paddingRight: 15 }}>
           <Button
-            onPress={() =>
-              navigation.navigate("AddIdeaScreen", { person: personId })
-            }
+            onPress={() => navigation.navigate("AddIdeaScreen", { personId })}
             title="Add Idea"
             style={styles.addPeopleButton}
           />
@@ -83,4 +82,25 @@ export default function IdeaScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   mainHeader: { fontSize: 20, paddingLeft: 22 },
+  ideaBlock: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 22,
+    paddingRight: 52,
+  },
+  ideaName: { fontSize: 20 },
+  ideaContainer: { backgroundColor: "white", borderBottomWidth: 2 },
+  deleteButton: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 80,
+  },
+  deleteBtnText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 15,
+  },
 });
