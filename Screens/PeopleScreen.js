@@ -79,6 +79,11 @@ export default function PeopleScreen() {
             data={people}
             keyExtractor={(item) => item.id}
             renderItem={peopleCard}
+            ListEmptyComponent={() => (
+              <Text style={styles.noPeopleText}>
+                No People Yet{"\n"}Please Add People
+              </Text>
+            )}
           />
         </SafeAreaView>
       </SafeAreaProvider>
@@ -87,6 +92,7 @@ export default function PeopleScreen() {
 }
 
 const styles = StyleSheet.create({
+  noPeopleText: { fontSize: 20, alignSelf: "center", paddingVertical: 200 },
   personName: {
     fontSize: 20,
     color: "black",
@@ -116,8 +122,7 @@ const styles = StyleSheet.create({
   },
   mainHeader: {
     fontSize: 30,
-    marginBottom: 5,
-    marginLeft: 20,
+    paddingLeft: 20,
+    backgroundColor: "white",
   },
-  mainContainer: { backgroundColor: "white" },
 });

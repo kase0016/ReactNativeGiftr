@@ -30,6 +30,15 @@ export default function IdeaScreen({ navigation, route }) {
     if (item.id !== personId) {
       return null;
     }
+
+    if (item.ideas.length == 0) {
+      return (
+        <View>
+          <Text style={styles.noIdeasText}>No Ideas Yet</Text>
+        </View>
+      );
+    }
+
     return (
       <View>
         {item.ideas.map((idea) => (
@@ -70,6 +79,7 @@ export default function IdeaScreen({ navigation, route }) {
   return (
     <View>
       <View>
+        <Text style={styles.mainHeader}>Idea List</Text>
         <FlatList
           renderItem={ideaBlock}
           data={people}
@@ -81,7 +91,13 @@ export default function IdeaScreen({ navigation, route }) {
 }
 
 const styles = StyleSheet.create({
-  mainHeader: { fontSize: 20, paddingLeft: 22 },
+  mainHeader: { fontSize: 30, paddingLeft: 22, backgroundColor: "white" },
+  noIdeasText: {
+    fontSize: 20,
+    color: "gray",
+    textAlign: "center",
+    marginVertical: 200,
+  },
   ideaBlock: {
     display: "flex",
     flexDirection: "row",
