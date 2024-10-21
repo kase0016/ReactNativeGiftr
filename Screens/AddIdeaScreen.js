@@ -1,4 +1,4 @@
-import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { CameraView, useCameraPermissions } from "expo-camera";
 import { useState, useContext } from "react";
 import {
   Button,

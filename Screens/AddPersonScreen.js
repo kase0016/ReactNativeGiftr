@@ -3,6 +3,7 @@ import { View, TextInput, Button, Text, StyleSheet } from "react-native";
 import PeopleContext from "../PeopleContext";
 import { useNavigation } from "@react-navigation/native";
 import DatePicker from "react-native-modern-datepicker";
+import { format, parseISO } from "date-fns";
 
 export default function AddPersonScreen() {
   const [name, setName] = useState("");
@@ -12,6 +13,7 @@ export default function AddPersonScreen() {
 
   const savePerson = () => {
     addPerson(name, dob);
+    console.log(dob);
     navigation.goBack();
   };
   return (
@@ -40,7 +42,15 @@ export default function AddPersonScreen() {
           mode="calendar"
           minuteInterval={30}
           style={{ borderRadius: 10 }}
-          onDateChange={(date) => setDob(date)}
+          onDateChange={(selectedDate) => {
+            const formattedForParseISO = selectedDate.replace(/\//g, "-");
+            console.log(selectedDate);
+            const formattedDate = format(
+              parseISO(formattedForParseISO),
+              "MMMM d"
+            );
+            setDob(formattedDate);
+          }}
         />
       </View>
       <Button title="Save" onPress={savePerson} />
